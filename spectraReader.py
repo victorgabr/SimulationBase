@@ -73,6 +73,7 @@ if __name__ == '__main__':
     # test gamma histogram
     plt.plot(energy_bins / 1000, spectra_reader.spectra_matrix[0])
     plt.title("Prompt γ-ray spectra around 175 MeV proton Bragg peak in water ")
+    # ref to https://gray.mgh.harvard.edu/research/imaging/246-prompt-gamma
     plt.xlabel("Energy [MeV]")
     plt.ylabel("γ-ray count [a.u]")
     plt.show()
