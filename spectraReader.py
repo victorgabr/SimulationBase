@@ -4,6 +4,9 @@ import pandas as pd
 import numpy as np
 
 
+# plt.rc('text', usetex=True)
+# plt.rc('font', family='serif')
+
 class SpectraReader:
     def __init__(self):
         self._n_voxels = None
@@ -55,12 +58,21 @@ class SpectraReader:
 
 
 if __name__ == '__main__':
-    spectra_file = '/home/victor/Dropbox/victorgabr-geant4/build-SimulationBase-GEANT4_Clang-Release/ProtonSpectra.csv'
+    spectra_file = '/home/victor/Dropbox/victorgabr-geant4/build-SimulationBase-GEANT4_Clang-Release/PromptGammaSpectra.csv'
     spectra_reader = SpectraReader()
     spectra_reader.read(spectra_file)
     # plot proton spectra at
-    pos = 50 # mm
+    pos = 50  # mm
     voxel_width = 2  # mm
-    energy_bins = np.linspace(0, 100, spectra_reader.n_dims)
+    # energy in keV
+    energy_bins = np.linspace(0, 10000, spectra_reader.n_dims)
     spectra_reader.plot_spectra(pos, voxel_width, energy_bins)
+    plt.show()
+
+    plt.style.use("ggplot")
+    # test gamma histogram
+    plt.plot(energy_bins / 1000, spectra_reader.spectra_matrix[0])
+    plt.title("Prompt γ-ray spectra around 175 MeV proton Bragg peak in water ")
+    plt.xlabel("Energy [MeV]")
+    plt.ylabel("γ-ray count [a.u]")
     plt.show()

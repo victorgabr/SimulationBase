@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
 
 #ifdef G4MULTITHREADED
     G4MTRunManager *pRunManager = new G4MTRunManager;
-    pRunManager->SetNumberOfThreads(4); // Is equal to 2 by default
+    pRunManager->SetNumberOfThreads(8); // Is equal to 2 by default
 #else
     G4RunManager *pRunManager = new G4RunManager;
 #endif

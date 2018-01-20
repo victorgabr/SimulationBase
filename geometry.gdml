@@ -1,47 +1,52 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+xsi:noNamespaceSchemaLocation="/home/victor/geant4/source/source/persistency/gdml/schema/gdml.xsd">
   <define>
+    <position name="col_pos" x="0" y="-110" z="-200"/>
+    <position name="col_pos1" x="0" y="-110" z="+200"/>
   </define>
-
   <materials>
-    <material Z="13" name="ALU" state="solid">
-      <D unit="g/cm3" value="2.7"/>
-      <atom unit="g/mole" value="26.98"/>
-    </material>
-    <material Z="1" name="Galactic" state="gas">
+    <material Z="1" name="Vacuum" state="gas">
       <D unit="g/cm3" value="1e-24"/>
       <atom unit="g/mole" value="1.00794"/>
     </material>
   </materials>
-
-
   <solids>
-      <box lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
-      <box lunit="mm" name="sPhantom" x="350" y="350" z="350"/>
+    <box lunit="mm" name="WorldBox" x="2000" y="2000" z="2000"/>
+    <tube name= "sPhantom" rmin="0" rmax="50" z="400" deltaphi="2*pi" startphi="0" aunit="rad" lunit= "mm"/>
+    <box name="Box" x="200" y="100" z="360" lunit="mm"/>
+    <box name="Box1" x="200" y="100" z="360" lunit="mm"/>
   </solids>
-
   <structure>
-
-
-        <volume name="phantom">
-            <materialref ref="G4_WATER"/>
-            <solidref ref="sPhantom"/>
-        </volume>
-
-
-        <volume name="TOP">
-            <materialref ref="G4_AIR"/>
-                <solidref ref="WorldBox"/>
-            <physvol name="phantom_phys">
-                <volumeref ref="phantom"/>
-            </physvol>
-        </volume>
-
+    <volume name="phantom">
+      <materialref ref="G4_WATER"/>
+      <solidref ref="sPhantom"/>
+    </volume>
+    <volume name="lvColimator">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="Box" />
+    </volume>
+    <volume name="lvColimator1">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="Box1" />
+    </volume>
+    <volume name="TOP">
+      <materialref ref="Vacuum"/>
+      <solidref ref="WorldBox"/>
+      <physvol name="phantom_phys">
+        <volumeref ref="phantom"/>
+      </physvol>
+      <physvol name="pvColimator">
+        <volumeref ref="lvColimator"/>
+        <positionref ref="col_pos"/>
+      </physvol>
+      <physvol name="pvColimator1">
+        <volumeref ref="lvColimator1"/>
+        <positionref ref="col_pos1"/>
+      </physvol>
+    </volume>
   </structure>
-
   <setup name="Default" version="1.0">
-    <world ref="TOP"/>
-  </setup>
-
-</gdml>
+      <world ref="TOP"/>
+    </setup>
+  </gdml>

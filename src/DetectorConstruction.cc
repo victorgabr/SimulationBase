@@ -46,7 +46,8 @@ DetectorConstruction::~DetectorConstruction() {
 
 void DetectorConstruction::readGDML() {
     // **** LOOK HERE*** FOR READING GDML FILES
-    fParser.Read(fGDMLFile, false);
+    //    fParser.Read(fGDMLFile, false);
+    fParser.Read(fGDMLFile, true);
     G4cout << *(G4Material::GetMaterialTable()) << G4endl;
     // Giving World Physical Volume from GDML Parser
     fWorldPhysVol = fParser.GetWorldVolume();

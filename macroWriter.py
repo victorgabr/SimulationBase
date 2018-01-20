@@ -56,7 +56,7 @@ class SpectraMacroWriter:
 
         body = ""
         for i in range(len(bins_pairs)):
-            body += self.get_bin_txt(i, bins_pairs[i][0], bins_pairs[i][1], "MeV", "proton")
+            body += self.get_bin_txt(i, bins_pairs[i][0], bins_pairs[i][1], self.quantity, self.particle)
 
         self._body = body
 
@@ -133,5 +133,11 @@ class SpectraMacroWriter:
 
 
 if __name__ == '__main__':
-    writerObj = SpectraMacroWriter()
+    writerObj = SpectraMacroWriter(particle="gamma",
+                                   max_energy=10000,
+                                   quantity="keV",
+                                   bin_size=10,
+                                   box_size=(200, 5, 20),
+                                   n_voxels=(1, 1, 1),
+                                   translate_xyz=(0, -150, 0))
     writerObj.write()
